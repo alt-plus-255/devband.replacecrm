@@ -1,5 +1,7 @@
 # devband.replacecrm
 
+Смотри актуальную информацию в https://gitverse.ru/altplus255/devband.replacecrm/content/master/README.md
+
 DevBand: ReplaceCrm (Переопределение CRM, СП)
 
 Модуль позволяет определять фабрику, container, router для каждого СП со своим EntityTypeId. 
