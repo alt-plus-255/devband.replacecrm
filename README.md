@@ -40,7 +40,7 @@ return [
 return [
   'services' => [
     'value' => [
-      'replace.crm.service.router.'.192 => new \TEST\Smart192\Crm\Service\Container ,
+      'replace.crm.service.container.'.192 => new \TEST\Smart192\Crm\Service\Container ,
     ]
   ]
 ];
