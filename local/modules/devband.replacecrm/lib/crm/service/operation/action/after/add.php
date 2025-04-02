@@ -1,6 +1,6 @@
 <?php
 
-namespace DevBand\ReplaceCrm\Crm\Service\Operation\Action\Before;
+namespace DevBand\ReplaceCrm\Crm\Service\Operation\Action\After;
 
 use Bitrix\Crm\Item;
 use Bitrix\Main\EventResult;
@@ -8,7 +8,7 @@ use Bitrix\Main\Result;
 use Bitrix\Crm\Service\Operation\Action;
 use Bitrix\Main\Event;
 
-class Delete extends Action
+class Add extends Action
 {
     /**
      * @param Item $item
@@ -24,7 +24,7 @@ class Delete extends Action
 
         $result = new Result();
 
-        $event = new Event('devband.replacecrm', 'replace_before_onCrmDynamicItemDelete', [
+        $event = new Event('devband.replacecrm', 'replace_after_onCrmDynamicItemAdd', [
             'item' => $item,
             'result' => &$result
         ]);

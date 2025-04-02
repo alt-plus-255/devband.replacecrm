@@ -5,6 +5,9 @@ namespace DevBand\ReplaceCrm\Crm\Service;
 use Bitrix\Crm\Model\Dynamic\Type;
 use Bitrix\Crm\Service\Factory;
 use Bitrix\Crm\Service\UserPermissions;
+use Bitrix\Main\Event;
+use Bitrix\Main\EventResult;
+use Bitrix\Main\Result;
 
 \Bitrix\Main\Loader::includeModule("crm");
 \Bitrix\Main\Loader::includeModule("devband.replacecrm");
@@ -42,12 +45,31 @@ final class Container extends \Bitrix\Crm\Service\Container
 
     public function getUserPermissions(?int $userId = null): UserPermissions
     {
-        return $this->replaceServiceMethod(
+        $event = new Event('devband.replacecrm', 'replace_container_onUserPermissions', [
+            'userId' => $userId,
+            'entityTypeId' => $this->entityTypeId,
+            'result' => &$result
+        ]);
+        $event->send();
+
+        $result = $this->replaceServiceMethod(
             __FUNCTION__,
             [
                 $userId
             ]
         );
+
+        foreach ($event->getResults() as $eventResult) {
+            if ($eventResult->getType() === EventResult::SUCCESS) {
+                $parameters = $eventResult->getParameters();
+
+                if (isset($parameters['result']) && $parameters['result'] instanceof UserPermissions) {
+                    $result = $eventResult;
+                }
+            }
+        }
+
+        return $result;
     }
 
     public function getTypeByEntityTypeId(int $entityTypeId): ?Type

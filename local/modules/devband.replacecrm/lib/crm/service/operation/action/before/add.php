@@ -8,7 +8,7 @@ use Bitrix\Main\Result;
 use Bitrix\Crm\Service\Operation\Action;
 use Bitrix\Main\Event;
 
-class Delete extends Action
+class Add extends Action
 {
     /**
      * @param Item $item
@@ -24,7 +24,7 @@ class Delete extends Action
 
         $result = new Result();
 
-        $event = new Event('devband.replacecrm', 'replace_before_onCrmDynamicItemDelete', [
+        $event = new Event('devband.replacecrm', 'replace_before_onCrmDynamicItemAdd', [
             'item' => $item,
             'result' => &$result
         ]);

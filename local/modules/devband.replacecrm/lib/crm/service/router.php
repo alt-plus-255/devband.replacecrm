@@ -5,6 +5,7 @@ namespace DevBand\ReplaceCrm\Crm\Service;
 use Bitrix\Crm\ItemIdentifier;
 use Bitrix\Crm\Service\Router\ParseResult;
 use Bitrix\Main\DI\ServiceLocator;
+use Bitrix\Main\Event;
 use Bitrix\Main\HttpRequest;
 use Bitrix\Main\Web\Uri;
 
@@ -51,6 +52,12 @@ class Router extends \Bitrix\Crm\Service\Router
 
         if ($entityTypeId) {
             $entityTypeId = intval($entityTypeId);
+
+            $event = new Event('devband.replacecrm', 'replace_router_onParseRequest', [
+                'httpRequest' => $httpRequest,
+                'entityTypeId' => $entityTypeId
+            ]);
+            $event->send();
 
             return $this->replaceServiceMethod(
                 __FUNCTION__,
